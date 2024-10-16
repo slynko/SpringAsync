@@ -30,19 +30,18 @@ class ReportGenerationUseCaseTest {
     @Test
     void should_generate_reports_and_return_its_names() {
         // When
-        List<String> reportNames = reportGenerationUseCase.waitAndGetReportNames(userNames);
+        List<String> reportNames = reportGenerationUseCase.generateAndGetReportNames(userNames);
 
         // Then
         assertEquals(userNames.size(), reportNames.size());
         assertThat(reportNames).containsExactlyInAnyOrder("report_for_User1.pdf", "report_for_User2.pdf", "report_for_User3.pdf");
     }
 
-
     @Test
     void should_generate_reports_and_retry_if_fails() {
         // When
         var unknownName = List.of("unknown", "User1");
-        var exception = assertThrows(CompletionException.class, () -> reportGenerationUseCase.waitAndGetReportNames(unknownName));
+        var exception = assertThrows(CompletionException.class, () -> reportGenerationUseCase.generateAndGetReportNames(unknownName));
 
         // Then
         assertThat(exception.getCause()).isInstanceOf(InvalidUsernameException.class);

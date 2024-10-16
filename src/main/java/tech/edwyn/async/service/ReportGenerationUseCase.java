@@ -14,7 +14,7 @@ public class ReportGenerationUseCase {
     @Autowired
     private ReportService reportService;
 
-    public List<String> waitAndGetReportNames(List<String> userNames) {
+    public List<String> generateAndGetReportNames(List<String> userNames) {
         var reportFutures = generateReportsForAllUsers(userNames);
 
         return reportFutures.stream()
